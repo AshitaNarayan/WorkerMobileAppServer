@@ -61,8 +61,14 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 	public List<NewCustomerWork> matchJobWithWorkerWorkRequest(String data) {
 		JSONObject newRequestByWorkerForMatchingJob = new JSONObject(data);
 
-		Integer locationRange = (Integer) newRequestByWorkerForMatchingJob.get("location_Range");
-		Integer payInRange = (Integer) newRequestByWorkerForMatchingJob.get("pay_In_Range");
+		Integer locationRange = 1;
+		if (!newRequestByWorkerForMatchingJob.get("location_Range").equals("")) {
+			locationRange = Integer.parseInt((String) newRequestByWorkerForMatchingJob.get("location_Range"));
+		}
+		Integer payInRange = 1;
+		if (newRequestByWorkerForMatchingJob.get("pay_In_Range").equals("")) {
+			payInRange = (Integer) newRequestByWorkerForMatchingJob.get("pay_In_Range");
+		}
 		String workerLocation = (String) newRequestByWorkerForMatchingJob.get("worker_Location");
 		String workerSkill = (String) newRequestByWorkerForMatchingJob.get("worker_Skill");
 
@@ -161,7 +167,10 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 		Collections.sort(matchJobsForWorkerSortedByCustomerRating, new Comparator<NewCustomerWork>() {
 
 			public int compare(NewCustomerWork o1, NewCustomerWork o2) {
-				return Integer.parseInt(o1.getCustomerRating()) - Integer.parseInt(o2.getCustomerRating());
+				return ((int) Double.parseDouble(o1.getCustomerRating()))
+						- ((int) Double.parseDouble(o2.getCustomerRating()));
+				// return Integer.parseInt() -
+				// Integer.parseInt(o2.getCustomerRating());
 			}
 		});
 		return matchJobsForWorkerSortedByCustomerRating;
@@ -183,17 +192,17 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 	}
 
 	private boolean matchPayment(String payOut, Integer payInRange) {
-		int diff = Integer.parseInt(payOut) - payInRange;
-		if (diff < 0) {
-			diff = diff * (-1);
-		}
+		return true;
 
-		int payOutDiffPercent = (diff / payInRange) * 100;
-
-		if (payOutDiffPercent <= PAYMENT_DIFF_THRESHOLD) {
-			return true;
-		}
-		return false;
+		/*
+		 * int diff = Integer.parseInt(payOut) - payInRange; if (diff < 0) {
+		 * diff = diff * (-1); }
+		 * 
+		 * int payOutDiffPercent = (diff / payInRange) * 100;
+		 * 
+		 * if (payOutDiffPercent <= PAYMENT_DIFF_THRESHOLD) { return true; }
+		 */
+		// return false;
 	}
 
 	private boolean matchLocation(String workLocation, String workerLocation, Integer locationRange) {
