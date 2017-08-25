@@ -31,7 +31,7 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 	ConcurrentHashMap<String, NewCustomerWork> matchingJobsForWorker = new ConcurrentHashMap<>();
 
 	@Override
-	public void addNewWorkByCustomer(String data) {
+	public List<NewCustomerWork> addNewWorkByCustomer(String data) {
 		JSONObject newWorkAdded = new JSONObject(data);
 		newWorkByCustomerCount++;
 
@@ -44,6 +44,8 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 		newWorkByCustomer.put(newWorkAdded.getString("customer_Name") + "_" + newWorkByCustomerCount, newCustomerWork);
 
 		printNewWorkByCustomer();
+		
+		return sortByCustomerRating(newWorkByCustomer);
 
 	}
 
@@ -61,14 +63,19 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 	public List<NewCustomerWork> matchJobWithWorkerWorkRequest(String data) {
 		JSONObject newRequestByWorkerForMatchingJob = new JSONObject(data);
 
-		Integer locationRange = 1;
-		if (!newRequestByWorkerForMatchingJob.get("location_Range").equals("")) {
+		//Integer locationRange = 1;
+		/*if (!newRequestByWorkerForMatchingJob.get("location_Range").equals("")) {
 			locationRange = Integer.parseInt((String) newRequestByWorkerForMatchingJob.get("location_Range"));
 		}
 		Integer payInRange = 1;
 		if (newRequestByWorkerForMatchingJob.get("pay_In_Range").equals("")) {
 			payInRange = (Integer) newRequestByWorkerForMatchingJob.get("pay_In_Range");
-		}
+		}*/
+		
+		
+		Integer locationRange = (Integer) newRequestByWorkerForMatchingJob.get("location_Range");
+		Integer payInRange = (Integer) newRequestByWorkerForMatchingJob.get("pay_In_Range");
+		
 		String workerLocation = (String) newRequestByWorkerForMatchingJob.get("worker_Location");
 		String workerSkill = (String) newRequestByWorkerForMatchingJob.get("worker_Skill");
 
@@ -93,7 +100,7 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 
 		}
 
-		return sortByCustomerRating();
+		return sortByCustomerRating(matchingJobsForWorker);
 		// List<NewCustomerWork> matchJobsForWorkerSortedByCustomerRating =
 		// sortByCustomerRating();
 		// List<NewCustomerWork> matchJobsForWorkerSortedByPayment =
@@ -161,19 +168,16 @@ public class CustomerNewWorkService implements CustomerNewWorkServiceInterface {
 
 	}
 
-	private List<NewCustomerWork> sortByCustomerRating() {
-		List<NewCustomerWork> matchJobsForWorkerSortedByCustomerRating = new ArrayList<NewCustomerWork>(
-				matchingJobsForWorker.values());
-		Collections.sort(matchJobsForWorkerSortedByCustomerRating, new Comparator<NewCustomerWork>() {
+	private List<NewCustomerWork> sortByCustomerRating(ConcurrentHashMap<String, NewCustomerWork> map) {
+		List<NewCustomerWork> jobsSortedByCustomerRating = new ArrayList<NewCustomerWork>(map.values());
+		Collections.sort(jobsSortedByCustomerRating, new Comparator<NewCustomerWork>() {
 
 			public int compare(NewCustomerWork o1, NewCustomerWork o2) {
 				return ((int) Double.parseDouble(o1.getCustomerRating()))
 						- ((int) Double.parseDouble(o2.getCustomerRating()));
-				// return Integer.parseInt() -
-				// Integer.parseInt(o2.getCustomerRating());
 			}
 		});
-		return matchJobsForWorkerSortedByCustomerRating;
+		return jobsSortedByCustomerRating;
 
 	}
 

@@ -38,7 +38,7 @@ public class NewCustomerWork {
 		this.customerWorkSequence = customerWorkSequence;
 	}
 
-	public NewCustomerWork(String workId, String customerName, String jobDescription, String location, String payOut,
+	public NewCustomerWork(String customerWorkSequence, String customerName, String jobDescription, String location, String payOut,
 			String capability, String customerRating) {
 		this.customerWorkSequence = customerWorkSequence;
 		this.customerName = customerName;

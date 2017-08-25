@@ -21,7 +21,7 @@ public class WorkerRequestForMatchingJobs {
 	private CustomerNewWorkServiceInterface service;
 
 	@RequestMapping(value = "/workerGetMatchJobs", method = RequestMethod.POST)
-	@CrossOrigin(origins = "http://localhost:8102")
+	@CrossOrigin(origins = "http://localhost:8100")
 	public @ResponseBody List<NewCustomerWork> customerAddWork(@RequestBody String data) {
 
 		System.out.println("Worker requesting for work from mobile");
