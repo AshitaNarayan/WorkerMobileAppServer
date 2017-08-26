@@ -2,6 +2,8 @@ package com.workerewebapp.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,13 +22,14 @@ public class CustomerAddWork {
 	private CustomerNewWorkServiceInterface service;
 
 	@RequestMapping(value = "/customerAddWork", method = RequestMethod.POST)
-	@CrossOrigin(origins = "http://localhost:8100")
-	public @ResponseBody List<NewCustomerWork> customerAddWork(@RequestBody String data) {
+	//@CrossOrigin(origins = "http://localhost:8100")
+	//@CrossOrigin(origins = "file://")
+	@CrossOrigin
+	public @ResponseBody List<NewCustomerWork> customerAddWork(@RequestBody String data, HttpServletResponse response) {
 
 		System.out.println("Customer added work from mobile");
 		System.out.println(data);
 		List<NewCustomerWork> addedJobsByWorker = service.addNewWorkByCustomer(data);
-
 		return addedJobsByWorker;
 
 	}
