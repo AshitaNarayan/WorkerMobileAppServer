@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.workerewebapp.app.data.NewCustomerWork;
-import com.workerewebapp.service.CustomerNewWorkServiceInterface;
+import com.workerewebapp.app.data.WorkDetail;
+import com.workerewebapp.service.WorkFinderService;
 
 @RestController
 public class CreateBulkDataService {
 
 	@Autowired
-	private CustomerNewWorkServiceInterface service;
+	private WorkFinderService service;
 
 	@RequestMapping(value = "/createBulkData", method = RequestMethod.POST)
 	@CrossOrigin
-	public String customerAddWork(@RequestBody String data) {
+	public String createBulkData(@RequestBody String data) {
 
 		System.out.println("Bulk Data added from mobile");
 		System.out.println(data);

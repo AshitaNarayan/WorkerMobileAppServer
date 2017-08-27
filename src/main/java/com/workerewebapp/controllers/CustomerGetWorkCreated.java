@@ -15,20 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.workerewebapp.app.data.WorkDetail;
 import com.workerewebapp.service.WorkFinderService;
 
+
 @RestController
-public class CustomerAddWork {
+public class CustomerGetWorkCreated {
 
 	@Autowired
 	private WorkFinderService service;
 
-	@RequestMapping(value = "/customerAddWork", method = RequestMethod.POST)
+	@RequestMapping(value = "/customerGetWork", method = RequestMethod.POST)
 	@CrossOrigin
-	public @ResponseBody List<WorkDetail> customerAddWork(@RequestBody String data, HttpServletResponse response) {
+	public @ResponseBody List<WorkDetail> customerGetWork(@RequestBody String data, HttpServletResponse response) {
 
-		System.out.println("Customer added work from mobile");
+		System.out.println("Customer requested all work from mobile");
 		System.out.println(data);
-		List<WorkDetail> addedJobsByWorker = service.addNewWorkByCustomer(data);
-		return addedJobsByWorker;
+		List<WorkDetail> workForCustomer = service.getWorkForCustomer(data);
+		return workForCustomer;
 
 	}
 

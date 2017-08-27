@@ -13,22 +13,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workerewebapp.app.data.WorkDetail;
+import com.workerewebapp.app.data.MyJobDetail;
 import com.workerewebapp.service.WorkFinderService;
 
 @RestController
-public class CustomerAddWork {
+public class WorkerGetMyJobs {
 
 	@Autowired
 	private WorkFinderService service;
 
-	@RequestMapping(value = "/customerAddWork", method = RequestMethod.POST)
+	@RequestMapping(value = "/workerGetJobsIntAndAccept", method = RequestMethod.POST)
 	@CrossOrigin
-	public @ResponseBody List<WorkDetail> customerAddWork(@RequestBody String data, HttpServletResponse response) {
+	public @ResponseBody List<MyJobDetail> customerGetInterestedAndAcceptedJobs(@RequestBody String data) {
 
-		System.out.println("Customer added work from mobile");
+		System.out.println("Worker gets interested and Accepted jobs from mobile");
 		System.out.println(data);
-		List<WorkDetail> addedJobsByWorker = service.addNewWorkByCustomer(data);
-		return addedJobsByWorker;
+		List<MyJobDetail> interestedAndAcceptedJobsList = service.getInterestedAndAcceptedJobsListForWorker(data);
+		return interestedAndAcceptedJobsList;
 
 	}
 

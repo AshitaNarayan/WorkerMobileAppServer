@@ -16,19 +16,19 @@ import com.workerewebapp.app.data.WorkDetail;
 import com.workerewebapp.service.WorkFinderService;
 
 @RestController
-public class CustomerAddWork {
+public class CustomerAcceptJobUpdate {
 
 	@Autowired
 	private WorkFinderService service;
 
-	@RequestMapping(value = "/customerAddWork", method = RequestMethod.POST)
+	@RequestMapping(value = "/customerAcceptsJob", method = RequestMethod.POST)
 	@CrossOrigin
-	public @ResponseBody List<WorkDetail> customerAddWork(@RequestBody String data, HttpServletResponse response) {
+	public String customerAcceptsJob(@RequestBody String data) {
 
-		System.out.println("Customer added work from mobile");
+		System.out.println("Customer accepts job from mobile");
 		System.out.println(data);
-		List<WorkDetail> addedJobsByWorker = service.addNewWorkByCustomer(data);
-		return addedJobsByWorker;
+		service.customerAcceptsJob(data);
+		return "";
 
 	}
 
