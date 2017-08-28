@@ -469,13 +469,13 @@ public class WorkFinderMobileApplicationService implements WorkFinderService {
 
 		// Place in customer active map
 
-		customerActiveWorkIDList = customerActiveWorkMap.get(workerInterestInJob.getString("customerName"));
+		/*customerActiveWorkIDList = customerActiveWorkMap.get(workerInterestInJob.getString("customerName"));
 		if (customerActiveWorkIDList == null) {
 			customerActiveWorkIDList = new ArrayList<String>();
 		}
 
 		customerActiveWorkIDList.add(workID);
-		customerActiveWorkMap.put(workerInterestInJob.getString("customerName"), customerActiveWorkIDList);
+		customerActiveWorkMap.put(workerInterestInJob.getString("customerName"), customerActiveWorkIDList);*/
 
 		workerRatingMap.put(workerInterestInJob.getString("worker_Name"),
 				workerInterestInJob.getString("worker_Rating"));
